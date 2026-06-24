@@ -1,0 +1,47 @@
+/* ===== App-level Styles ===== */
+
+.app {
+  position: relative;
+}
+
+/* Scroll to top button */
+.scroll-top {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 48px;
+  height: 48px;
+  background: var(--accent);
+  color: var(--text-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px var(--accent-glow);
+  transition: transform var(--transition-fast), opacity var(--transition-fast), box-shadow var(--transition-fast);
+  z-index: 900;
+  opacity: 0.8;
+}
+
+.scroll-top:hover {
+  transform: translateY(-4px);
+  opacity: 1;
+  box-shadow: 0 8px 32px var(--accent-glow);
+}
+
+/* Smooth section dividers */
+section + section {
+  position: relative;
+}
+
+/* Global link underline animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
