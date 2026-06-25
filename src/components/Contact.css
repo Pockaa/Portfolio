@@ -185,6 +185,45 @@
   pointer-events: none;
 }
 
+.contact__submit--error {
+  background: #b91c1c;
+  box-shadow: 0 4px 24px rgba(185, 28, 28, 0.25);
+}
+
+.contact__submit:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Loading Spinner */
+.contact__spinner {
+  width: 18px;
+  height: 18px;
+  border: 2.5px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Error Message */
+.contact__error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #f87171;
+  padding: 10px 16px;
+  background: rgba(248, 113, 113, 0.08);
+  border: 1px solid rgba(248, 113, 113, 0.2);
+  border-radius: var(--radius-md);
+  animation: fadeInUp 0.3s var(--ease-out) forwards;
+}
+
 /* Decorative Timeline */
 .contact__decoration {
   position: absolute;
