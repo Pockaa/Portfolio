@@ -1,0 +1,315 @@
+/* ===== Work Experience Section ===== */
+
+.experience {
+  padding: var(--section-padding);
+  background: var(--bg-secondary);
+  position: relative;
+  overflow: hidden;
+}
+
+.experience__container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--container-padding);
+}
+
+/* ── Header ── */
+.experience__header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.experience__label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  display: block;
+  margin-bottom: 8px;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.experience--visible .experience__label {
+  animation: fadeInUp 0.6s var(--ease-out) forwards;
+}
+
+.experience__title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 16px;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.experience--visible .experience__title {
+  animation: fadeInUp 0.6s var(--ease-out) 0.1s forwards;
+}
+
+.experience__title span {
+  background: linear-gradient(135deg, var(--accent), #ff7eb3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.experience__subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.7;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.experience--visible .experience__subtitle {
+  animation: fadeInUp 0.6s var(--ease-out) 0.2s forwards;
+}
+
+/* ── Timeline ── */
+.experience__timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* ── Experience Item ── */
+.exp-item {
+  display: flex;
+  gap: 28px;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.exp-item--visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s var(--ease-out) var(--item-delay, 0s),
+              transform 0.6s var(--ease-out) var(--item-delay, 0s);
+}
+
+/* ── Timeline node (dot + line) ── */
+.exp-item__node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 24px;
+  padding-top: 28px;
+}
+
+.exp-item__dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 3px solid var(--item-accent, var(--accent));
+  background: var(--bg-secondary);
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+  transition: background var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.exp-item:hover .exp-item__dot {
+  background: var(--item-accent, var(--accent));
+  box-shadow: 0 0 16px color-mix(in srgb, var(--item-accent, var(--accent)) 50%, transparent);
+}
+
+.exp-item__line {
+  width: 2px;
+  flex: 1;
+  background: linear-gradient(
+    180deg,
+    var(--item-accent, var(--accent)),
+    rgba(255, 70, 85, 0.15) 70%,
+    transparent
+  );
+  margin-top: 4px;
+  min-height: 24px;
+}
+
+.exp-item:last-child .exp-item__line {
+  background: linear-gradient(
+    180deg,
+    var(--item-accent, var(--accent)),
+    transparent 60%
+  );
+}
+
+/* ── Card ── */
+.exp-item__card {
+  flex: 1;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px 28px 24px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--transition-med),
+              border-color var(--transition-med),
+              box-shadow var(--transition-med);
+}
+
+.exp-item__card:hover {
+  transform: translateY(-4px);
+  border-color: var(--item-accent, var(--border-accent));
+  box-shadow: 0 8px 40px color-mix(in srgb, var(--item-accent, var(--accent)) 12%, transparent);
+}
+
+/* Shine effect */
+.exp-item__shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.02), transparent);
+  transition: left 0.6s var(--ease-out);
+  pointer-events: none;
+}
+
+.exp-item__card:hover .exp-item__shine {
+  left: 100%;
+}
+
+/* ── Header inside card ── */
+.exp-item__header {
+  margin-bottom: 16px;
+}
+
+.exp-item__meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.exp-item__type {
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-family: var(--font-heading);
+  color: #fff;
+  background: color-mix(in srgb, var(--item-accent, var(--accent)) 85%, transparent);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.exp-item__period {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.exp-item__period svg {
+  opacity: 0.6;
+}
+
+.exp-item__role {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
+  line-height: 1.35;
+  color: var(--text-primary);
+}
+
+.exp-item__company {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--item-accent, var(--accent));
+}
+
+.exp-item__company svg {
+  opacity: 0.7;
+}
+
+/* ── Description ── */
+.exp-item__description {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin-bottom: 16px;
+}
+
+/* ── Highlights list ── */
+.exp-item__highlights {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 16px;
+}
+
+.exp-item__highlight {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.6;
+  transition: color var(--transition-fast);
+}
+
+.exp-item__highlight svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: var(--item-accent, var(--accent));
+  opacity: 0.7;
+  transition: opacity var(--transition-fast);
+}
+
+.exp-item__card:hover .exp-item__highlight {
+  color: var(--text-primary);
+}
+
+.exp-item__card:hover .exp-item__highlight svg {
+  opacity: 1;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .experience__timeline {
+    max-width: 100%;
+  }
+
+  .exp-item {
+    gap: 16px;
+  }
+
+  .exp-item__card {
+    padding: 22px 20px 20px;
+  }
+
+  .exp-item__highlights {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .exp-item__node {
+    display: none;
+  }
+
+  .exp-item__card {
+    margin-bottom: 16px;
+  }
+}

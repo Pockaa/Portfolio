@@ -24,7 +24,7 @@ export default function Footer() {
           <div className="footer__col">
             <h4 className="footer__col-title">Social</h4>
             <a href="https://github.com/Pockaa" className="footer__link" target="_blank" rel="noopener noreferrer">GitHub</a>
-            <a href="https://linkedin.com/" className="footer__link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="https://www.linkedin.com/in/jxrt-adlaon-750970320/" className="footer__link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <a href="https://facebook.com/" className="footer__link" target="_blank" rel="noopener noreferrer">Facebook</a>
           </div>
           <div className="footer__col">
