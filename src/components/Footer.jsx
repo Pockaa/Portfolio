@@ -19,6 +19,8 @@ export default function Footer() {
             <a href="#home" className="footer__link">Home</a>
             <a href="#skills" className="footer__link">Skills</a>
             <a href="#about" className="footer__link">About</a>
+            <a href="#experience" className="footer__link">Experience</a>
+            <a href="#certifications" className="footer__link">Certifications</a>
             <a href="#portfolio" className="footer__link">Portfolio</a>
           </div>
           <div className="footer__col">

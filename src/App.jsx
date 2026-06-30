@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Skills from './components/Skills';
@@ -15,8 +16,8 @@ function App() {
       <Navbar />
       <main>
         <Hero />
-        <Skills />
         <About />
+        <Skills />
         <Experience />
         <Certifications />
         <Portfolio />
@@ -31,9 +32,20 @@ function App() {
 }
 
 function ScrollToTop() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setVisible(window.scrollY > window.innerHeight);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
     <button
-      className="scroll-top"
+      className={`scroll-top ${visible ? 'scroll-top--visible' : ''}`}
       id="scroll-top"
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       aria-label="Scroll to top"

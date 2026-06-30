@@ -38,7 +38,7 @@ const experiences = [
     period: 'October 2025',
     type: 'Competition',
     description:
-      'Won 2nd place as part of Team ACLC SADEV in the Solutions Showdown at DIGI-MC 2025 — "Innovating Together: From Local Strengths to Global Impact," sponsored by the City Government of Malaybalay and held at Bukidnon State University from October 29–31, 2025.',
+      'Competed in the DIGI-MC digital media competition and achieved 2nd place, showcasing skills in creative design, digital problem-solving, and multimedia production.',
     highlights: [
       'Achieved 2nd place in the Solutions Showdown',
       'Developed innovative solutions addressing local-to-global challenges',
@@ -116,52 +116,43 @@ function ExperienceCard({ experience, index }) {
     <div
       className={`exp-item ${visible ? 'exp-item--visible' : ''}`}
       ref={cardRef}
-      style={{ '--item-delay': `${index * 0.15}s`, '--item-accent': experience.color }}
+      style={{ '--item-delay': `${index * 0.1}s`, '--item-accent': experience.color }}
     >
-      {/* Timeline node */}
-      <div className="exp-item__node">
-        <div className="exp-item__dot" />
-        <div className="exp-item__line" />
-      </div>
-
-      {/* Card */}
-      <div className="exp-item__card">
-        <div className="exp-item__header">
-          <div className="exp-item__meta">
-            <span className="exp-item__type">{experience.type}</span>
-            <span className="exp-item__period">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="10" />
-                <polyline points="12 6 12 12 16 14" />
-              </svg>
-              {experience.period}
-            </span>
-          </div>
-          <h3 className="exp-item__role">{experience.role}</h3>
-          <span className="exp-item__company">
+      <div className="exp-item__header">
+        <div className="exp-item__meta">
+          <span className="exp-item__type">{experience.type}</span>
+          <span className="exp-item__period">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-              <polyline points="9 22 9 12 15 12 15 22" />
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
             </svg>
-            {experience.company}
+            {experience.period}
           </span>
         </div>
-
-        <p className="exp-item__description">{experience.description}</p>
-
-        <ul className="exp-item__highlights">
-          {experience.highlights.map((item) => (
-            <li key={item} className="exp-item__highlight">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-              {item}
-            </li>
-          ))}
-        </ul>
-
-        <div className="exp-item__shine" />
+        <h3 className="exp-item__role">{experience.role}</h3>
+        <span className="exp-item__company">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+            <polyline points="9 22 9 12 15 12 15 22" />
+          </svg>
+          {experience.company}
+        </span>
       </div>
+
+      <p className="exp-item__description">{experience.description}</p>
+
+      <ul className="exp-item__highlights">
+        {experience.highlights.map((item) => (
+          <li key={item} className="exp-item__highlight">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            {item}
+          </li>
+        ))}
+      </ul>
+
+      <div className="exp-item__shine" />
     </div>
   );
 }
