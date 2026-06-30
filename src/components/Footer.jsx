@@ -8,7 +8,7 @@ export default function Footer() {
       <div className="footer__container">
         <div className="footer__top">
           <a href="#home" className="footer__logo">
-            Jert<span>.</span>
+            Jert Adlaon<span>.</span>
           </a>
           <p className="footer__tagline">Dedicated IT graduate creating efficient and innovative technology solutions.</p>
         </div>

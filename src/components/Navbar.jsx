@@ -43,7 +43,7 @@ export default function Navbar() {
     <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`} id="navbar">
       <div className="navbar__inner">
         <a href="#home" className="navbar__logo" onClick={(e) => { e.preventDefault(); handleNavClick('home'); }}>
-          Jert
+          Jert Adlaon<span>.</span>
         </a>
 
         <button
