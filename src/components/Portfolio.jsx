@@ -94,7 +94,6 @@ export default function Portfolio() {
     <section className="portfolio" id="portfolio">
       <div className="portfolio__container">
         <div className="portfolio__header">
-          <span className="portfolio__label">Portfolio</span>
           <h2 className="portfolio__title">Featured <span>Projects</span></h2>
           <p className="portfolio__subtitle">A selection of recent work that showcases my skills and passion.</p>
         </div>

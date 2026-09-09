@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import './Certifications.css';
 
 const certs = [
@@ -65,86 +66,9 @@ const certs = [
   },
 ];
 
-function CertSlide({ cert, onOpen }) {
-  return (
-    <div className="cert-slide">
-      <div className="cert-slide__year-badge">{cert.year}</div>
-      <div
-        className="cert-slide__image-wrap"
-        onClick={() => onOpen(cert)}
-        role="button"
-        tabIndex={0}
-        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onOpen(cert); }}
-      >
-        <img
-          src={cert.image}
-          alt={cert.title}
-          className="cert-slide__image"
-          loading="lazy"
-          style={cert.rotate ? { transform: `rotate(${cert.rotate}deg) scale(1.45)` } : undefined}
-        />
-        <div className="cert-slide__image-overlay">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M15 3h6v6" />
-            <path d="M10 14L21 3" />
-            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
-          </svg>
-          <span>View</span>
-        </div>
-      </div>
-      <div className="cert-slide__info">
-        <h3 className="cert-slide__title">{cert.title}</h3>
-        <p className="cert-slide__desc">{cert.description}</p>
-        <span className="cert-slide__issuer">{cert.issuer}</span>
-      </div>
-    </div>
-  );
-}
-
-function Lightbox({ cert, onClose }) {
-  useEffect(() => {
-    const handleKey = (e) => { if (e.key === 'Escape') onClose(); };
-    document.addEventListener('keydown', handleKey);
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.removeEventListener('keydown', handleKey);
-      document.body.style.overflow = '';
-    };
-  }, [onClose]);
-
-  return (
-    <div className="lightbox" onClick={onClose}>
-      <div className="lightbox__content" onClick={(e) => e.stopPropagation()}>
-        <button className="lightbox__close" onClick={onClose} aria-label="Close">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M18 6L6 18" />
-            <path d="M6 6l12 12" />
-          </svg>
-        </button>
-        <img
-          src={cert.image}
-          alt={cert.title}
-          className="lightbox__image"
-          style={cert.rotate ? { transform: `rotate(${cert.rotate}deg)` } : undefined}
-        />
-        <div className="lightbox__caption">
-          <h3>{cert.title}</h3>
-          <p>{cert.issuer} · {cert.year}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default function Certifications() {
-  const sectionRef = useRef(null);
-  const trackRef = useRef(null);
+function CertCard({ cert, index, onOpen }) {
+  const cardRef = useRef(null);
   const [visible, setVisible] = useState(false);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
-  const [activeCert, setActiveCert] = useState(null);
-
-  const closeLightbox = useCallback(() => setActiveCert(null), []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -156,88 +80,151 @@ export default function Certifications() {
       },
       { threshold: 0.1 }
     );
-    if (sectionRef.current) observer.observe(sectionRef.current);
+    if (cardRef.current) observer.observe(cardRef.current);
     return () => observer.disconnect();
   }, []);
 
-  const updateScrollButtons = () => {
-    const el = trackRef.current;
-    if (!el) return;
-    setCanScrollLeft(el.scrollLeft > 10);
-    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
-  };
+  return (
+    <div
+      className={`cert-card ${visible ? 'cert-card--visible' : ''}`}
+      ref={cardRef}
+      style={{ animationDelay: `${index * 0.08}s` }}
+      onClick={() => onOpen(index)}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onOpen(index); }}
+    >
+      <div className="cert-card__year-badge">{cert.year}</div>
+      <div className="cert-card__image-wrap">
+        <img
+          src={cert.image}
+          alt={cert.title}
+          className="cert-card__image"
+          loading="lazy"
+          style={cert.rotate ? { transform: `rotate(${cert.rotate}deg) scale(1.45)` } : undefined}
+        />
+        <div className="cert-card__image-overlay">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M15 3h6v6" />
+            <path d="M10 14L21 3" />
+            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+          </svg>
+          <span>View Certificate</span>
+        </div>
+      </div>
+      <div className="cert-card__info">
+        <h3 className="cert-card__title">{cert.title}</h3>
+        <p className="cert-card__desc">{cert.description}</p>
+        <span className="cert-card__issuer">{cert.issuer}</span>
+      </div>
+    </div>
+  );
+}
 
+function Lightbox({ cert, index, total, onNext, onPrev, onClose }) {
   useEffect(() => {
-    const el = trackRef.current;
-    if (!el) return;
-    el.addEventListener('scroll', updateScrollButtons, { passive: true });
-    updateScrollButtons();
-    return () => el.removeEventListener('scroll', updateScrollButtons);
+    const handleKey = (e) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowRight') onNext();
+      if (e.key === 'ArrowLeft') onPrev();
+    };
+    document.addEventListener('keydown', handleKey);
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', handleKey);
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [onClose, onNext, onPrev]);
+
+  return createPortal(
+    <div className="lightbox" onClick={onClose}>
+      <div className="lightbox__card" onClick={(e) => e.stopPropagation()}>
+        {/* Close Button */}
+        <button className="lightbox__close-btn" onClick={onClose} aria-label="Close modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+
+        {/* Previous Button */}
+        <button className="lightbox__arrow-btn lightbox__arrow-btn--prev" onClick={onPrev} aria-label="Previous certificate">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+
+        {/* Image Frame */}
+        <div className="lightbox__img-container">
+          <img
+            src={cert.image}
+            alt={cert.title}
+            className={`lightbox__img ${cert.rotate ? 'lightbox__img--rotated' : ''}`}
+          />
+        </div>
+
+        {/* Next Button */}
+        <button className="lightbox__arrow-btn lightbox__arrow-btn--next" onClick={onNext} aria-label="Next certificate">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+
+        {/* Info Bar at Bottom */}
+        <div className="lightbox__info-bar">
+          <div className="lightbox__info-text">
+            <h3 className="lightbox__title">{cert.title}</h3>
+            <p className="lightbox__meta">{cert.issuer} · {cert.year}</p>
+          </div>
+          <span className="lightbox__counter">{index + 1} / {total}</span>
+        </div>
+      </div>
+    </div>,
+    document.body
+  );
+}
+
+export default function Certifications() {
+  const [selectedIndex, setSelectedIndex] = useState(null);
+
+  const handleOpen = (index) => setSelectedIndex(index);
+  const handleClose = useCallback(() => setSelectedIndex(null), []);
+  const handleNext = useCallback(() => {
+    setSelectedIndex((prev) => (prev !== null ? (prev + 1) % certs.length : null));
+  }, []);
+  const handlePrev = useCallback(() => {
+    setSelectedIndex((prev) => (prev !== null ? (prev - 1 + certs.length) % certs.length : null));
   }, []);
 
-  const scroll = (direction) => {
-    const el = trackRef.current;
-    if (!el) return;
-    const amount = 340;
-    el.scrollBy({ left: direction === 'left' ? -amount : amount, behavior: 'smooth' });
-  };
-
   return (
-    <section className="certifications" id="certifications" ref={sectionRef}>
+    <section className="certifications" id="certifications">
       <div className="certifications__container">
         <div className="certifications__header">
-          <span className="certifications__label">Achievements</span>
           <h2 className="certifications__title">Earned <span>Certificates</span></h2>
           <p className="certifications__subtitle">
             Professional training, seminars, and programs I've completed.
           </p>
         </div>
 
-        <div className="certifications__carousel">
-          {canScrollLeft && (
-            <button
-              className="certifications__arrow certifications__arrow--left"
-              onClick={() => scroll('left')}
-              aria-label="Scroll left"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M15 18l-6-6 6-6" />
-              </svg>
-            </button>
-          )}
-
-          <div
-            className={`certifications__track ${visible ? 'certifications__track--visible' : ''}`}
-            ref={trackRef}
-          >
-            {certs.map((cert) => (
-              <CertSlide key={cert.title} cert={cert} onOpen={setActiveCert} />
-            ))}
-          </div>
-
-          {canScrollRight && (
-            <button
-              className="certifications__arrow certifications__arrow--right"
-              onClick={() => scroll('right')}
-              aria-label="Scroll right"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M9 18l6-6-6-6" />
-              </svg>
-            </button>
-          )}
-
-          <div className="certifications__counter">
-            <span>{certs.length} certificates</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14" />
-              <path d="M12 5l7 7-7 7" />
-            </svg>
-          </div>
+        <div className="certifications__grid">
+          {certs.map((cert, i) => (
+            <CertCard key={cert.title} cert={cert} index={i} onOpen={handleOpen} />
+          ))}
         </div>
       </div>
 
-      {activeCert && <Lightbox cert={activeCert} onClose={closeLightbox} />}
+      {selectedIndex !== null && (
+        <Lightbox
+          cert={certs[selectedIndex]}
+          index={selectedIndex}
+          total={certs.length}
+          onNext={handleNext}
+          onPrev={handlePrev}
+          onClose={handleClose}
+        />
+      )}
     </section>
   );
 }
+

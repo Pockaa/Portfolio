@@ -1,6 +1,11 @@
 import { useEffect, useRef } from 'react';
 import './Hero.css';
 
+const stats = [
+  { value: '2+', label: 'Years Experience' },
+  { value: '5', label: 'Projects Made' },
+];
+
 export default function Hero() {
   const decorRef = useRef(null);
 
@@ -27,16 +32,27 @@ export default function Hero() {
             Hello I'm<br />
             <span className="hero__title-accent">Jert Adlaon</span>
           </h1>
-          <p className="hero__description">
-            Dedicated IT graduate with strong technical skills, committed to
-            creating efficient and innovative technology solutions.
+          <p className="hero__subtitle-tag">
+            Passionate about creating <span>digital experiences</span>
           </p>
-          <a href="#about" className="hero__cta" id="hero-cta">
-            About Me
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </a>
+          <p className="hero__description">
+            I’m an IT graduate with experience in product listing, virtual assistance, web development, and video editing.
+            I’m a detail-oriented, adaptable, and hardworking person who enjoys learning new tools and taking on new challenges,
+            with a strong focus on delivering quality work and meeting deadlines.
+          </p>
+          <p className="hero__description">
+            I'm currently seeking remote opportunities where I can contribute to meaningful projects,
+            grow as a person, and collaborate with teams worldwide.
+          </p>
+
+          <div className="hero__stats">
+            {stats.map((stat, i) => (
+              <div key={stat.label} className="hero__stat-card" style={{ animationDelay: `${0.2 + i * 0.1}s` }}>
+                <span className="hero__stat-value">{stat.value}</span>
+                <span className="hero__stat-label">{stat.label}</span>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className="hero__visual" ref={decorRef}>
@@ -61,3 +77,4 @@ export default function Hero() {
     </section>
   );
 }
+

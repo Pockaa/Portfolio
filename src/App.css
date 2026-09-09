@@ -4,6 +4,17 @@
   position: relative;
 }
 
+@media (min-width: 1024px) {
+  .app {
+    padding-left: 250px;
+    padding-right: 0;
+  }
+
+  .scroll-top {
+    right: 32px;
+  }
+}
+
 /* Scroll to top button */
 .scroll-top {
   position: fixed;
@@ -37,16 +48,23 @@
   box-shadow: 0 8px 32px var(--accent-glow);
 }
 
-/* Smooth section dividers */
-section + section {
-  position: relative;
+/* Tab View Transition Wrapper */
+.tab-view-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  animation: fadeInTabPage 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-/* Global link underline animation */
-@keyframes fadeInUp {
+.tab-view-content {
+  flex: 1;
+}
+
+@keyframes fadeInTabPage {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;

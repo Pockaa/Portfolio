@@ -2,28 +2,49 @@ import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Skills from './components/Skills';
-import About from './components/About';
 import Experience from './components/Experience';
 import Certifications from './components/Certifications';
 import Portfolio from './components/Portfolio';
 import Contact from './components/Contact';
-import Footer from './components/Footer';
 import './App.css';
 
 function App() {
+  const [activeTab, setActiveTab] = useState('about');
+
+  const handleSelectTab = (tabId) => {
+    setActiveTab(tabId);
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
+  const renderActiveTab = () => {
+    switch (activeTab) {
+      case 'home':
+      case 'about':
+        return <Hero />;
+      case 'skills':
+        return <Skills />;
+      case 'experience':
+        return <Experience />;
+      case 'certifications':
+        return <Certifications />;
+      case 'portfolio':
+        return <Portfolio />;
+      case 'contact':
+        return <Contact />;
+      default:
+        return <Hero />;
+    }
+  };
+
   return (
     <div className="app">
-      <Navbar />
-      <main>
-        <Hero />
-        <About />
-        <Skills />
-        <Experience />
-        <Certifications />
-        <Portfolio />
-        <Contact />
-      </main>
-      <Footer />
+      <Navbar activeTab={activeTab} onSelectTab={handleSelectTab} />
+
+      <div className="tab-view-wrapper" key={activeTab}>
+        <main className="tab-view-content">
+          {renderActiveTab()}
+        </main>
+      </div>
 
       {/* Scroll to top button */}
       <ScrollToTop />
@@ -36,7 +57,7 @@ function ScrollToTop() {
 
   useEffect(() => {
     const onScroll = () => {
-      setVisible(window.scrollY > window.innerHeight);
+      setVisible(window.scrollY > 300);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();

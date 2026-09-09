@@ -6,7 +6,7 @@ const stats = [
   { value: '5', label: 'Projects Made' },
 ];
 
-const techStack = ['React', 'JavaScript', 'TypeScript', 'Node.js', 'Git', 'Figma', 'React Native', 'PhotoShop', 'Canva'];
+const techStack = ['React', 'JavaScript', 'TypeScript', 'Node.js', 'Git', 'Figma', 'React Native', 'PhotoShop', 'CapCut', 'Adobe Premiere', 'Canva'];
 
 export default function About() {
   const sectionRef = useRef(null);
@@ -33,14 +33,13 @@ export default function About() {
           <span className="about__label">About Me</span>
           <h2 className="about__title">Passionate about creating <span>digital experiences</span></h2>
           <p className="about__text">
-            I'm a dedicated IT graduate with hands-on experience in web and mobile development. I specialize
-            in building responsive, user-friendly applications using React, JavaScript, and Node.js. With
-            additional skills in networking, hardware troubleshooting, and multimedia design, I bring a
-            well-rounded technical perspective to every project.
+            I’m an IT graduate with experience in product listing, virtual assistance, web development, and video editing.
+            I’m a detail-oriented, adaptable, and hardworking person who enjoys learning new tools and taking on new challenges,
+            with a strong focus on delivering quality work and meeting deadlines.
           </p>
           <p className="about__text">
             I'm currently seeking remote opportunities where I can contribute to meaningful projects,
-            grow as a developer, and collaborate with teams worldwide.
+            grow as a person, and collaborate with teams worldwide.
           </p>
 
           <div className="about__tech">

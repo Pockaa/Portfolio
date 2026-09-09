@@ -3,6 +3,21 @@ import './Experience.css';
 
 const experiences = [
   {
+    role: 'Shopify Product Lister',
+    company: 'TwinAthletics',
+    period: 'March 2025 – Feb 2026',
+    type: 'E-Commerce',
+    description:
+      'Managed product listings, inventory data, and catalog optimization on Shopify for TwinAthletics, ensuring accurate product details, high-converting descriptions, and organized store collections.',
+    highlights: [
+      'Created and managed high-quality product listings on Shopify',
+      'Updated product titles, descriptions, pricing, and variants',
+      'Organized product collections and tags for smooth navigation',
+      'Maintained accurate inventory data and catalog details',
+    ],
+    color: '#95bf47',
+  },
+  {
     role: 'OJT — IT Support',
     company: 'M. Montesclaros Holdings Inc.',
     period: 'Jan 2026 – May 2026',
@@ -34,7 +49,7 @@ const experiences = [
   },
   {
     role: 'DIGI-MC 2025 — 2nd Place',
-    company: 'City Government of Malaybalay / BukSU',
+    company: 'Malaybalay City / BukSU',
     period: 'October 2025',
     type: 'Competition',
     description:
@@ -76,21 +91,6 @@ const experiences = [
       'Applied UI/UX design principles to every project',
     ],
     color: '#a78bfa',
-  },
-  {
-    role: 'Virtual Assistant Trainee',
-    company: 'Freelance Academy',
-    period: '2025',
-    type: 'Training',
-    description:
-      'Completed professional training in virtual assistance, covering real estate VA tasks, QuickBooks bookkeeping, social media marketing, and general administrative support.',
-    highlights: [
-      'QuickBooks Online bookkeeping & invoicing',
-      'Real estate admin: CRM, scheduling, data entry',
-      'Social media content scheduling & analytics',
-      'Email management and document organization',
-    ],
-    color: '#ff7eb3',
   },
 ];
 
@@ -179,10 +179,9 @@ export default function Experience() {
     <section className={`experience ${visible ? 'experience--visible' : ''}`} id="experience" ref={sectionRef}>
       <div className="experience__container">
         <div className="experience__header">
-          <span className="experience__label">Career Journey</span>
           <h2 className="experience__title">Work <span>Experience</span></h2>
           <p className="experience__subtitle">
-            My professional background in development, IT support, and virtual assistance.
+            My professional background in development, IT support, and e-commerce.
           </p>
         </div>
 

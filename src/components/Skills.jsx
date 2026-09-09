@@ -36,7 +36,7 @@ const skillCategories = [
         <polyline points="21 15 16 10 5 21" />
       </svg>
     ),
-    skills: ['Adobe Photoshop', 'Photo Editing & Graphic Design', 'Video Editing & Multimedia Production'],
+    skills: ['CapCut', 'Adobe Premiere Pro', 'Adobe Photoshop', 'Video Editing & Multimedia Production'],
     color: '#ff7eb3',
   },
   {
@@ -102,11 +102,9 @@ export default function Skills() {
     <section className="skills" id="skills">
       <div className="skills__container">
         <div className="skills__header">
-          <span className="skills__label">What I Know</span>
-          <h2 className="skills__title">Skills & <span>Services</span></h2>
+          <h2 className="skills__title">Tech<span> Stack</span></h2>
           <p className="skills__subtitle">
-            A comprehensive overview of my technical expertise across multiple disciplines.
-          </p>
+            A comprehensive overview of my technical expertise across multiple disciplines.</p>
         </div>
 
         <div className="skills__grid">
