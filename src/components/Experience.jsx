@@ -131,7 +131,7 @@ export default function Experience() {
           <div className="timeline-line" />
 
           <div className="timeline-items">
-            {filteredExperiences.map((exp, index) => (
+            {filteredExperiences.map((exp) => (
               <div key={exp.role + exp.period} className="timeline-item">
                 <div
                   className="timeline-dot"
