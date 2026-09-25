@@ -1,129 +1,163 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './Navbar.css';
 
-const mainNav = [
-  {
-    id: 'skills',
-    label: 'Stack',
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <polygon points="12 2 2 7 12 12 22 7 12 2" />
-        <polyline points="2 17 12 22 22 17" />
-        <polyline points="2 12 17 22 12" />
-      </svg>
-    ),
-  },
-  {
-    id: 'experience',
-    label: 'Experience',
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
-        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-      </svg>
-    ),
-  },
-  {
-    id: 'certifications',
-    label: 'Certifications',
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 15l-2 5 3-1.5L16 20l-2-5" />
-        <circle cx="12" cy="9" r="6" />
-      </svg>
-    ),
-  },
-  {
-    id: 'portfolio',
-    label: 'Projects',
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="16 18 22 12 16 6" />
-        <polyline points="8 6 2 12 8 18" />
-      </svg>
-    ),
-  },
-  {
-    id: 'contact',
-    label: 'Contact',
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-        <polyline points="22,6 12,13 2,6" />
-      </svg>
-    ),
-  },
+const navItems = [
+  { id: 'hero', label: 'About' },
+  { id: 'skills', label: 'Stack' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'portfolio', label: 'Projects' },
+  { id: 'certifications', label: 'Certifications' },
+  { id: 'contact', label: 'Contact' },
 ];
 
-export default function Navbar({ activeTab, onSelectTab }) {
-  const [isOpen, setIsOpen] = useState(false);
+export default function Navbar({ activeSection, theme, onToggleTheme, onNavigateSection }) {
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  // Add box shadow & background blur intensity when scrolled
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleNavClick = (id) => {
-    setIsOpen(false);
-    onSelectTab?.(id);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setMobileOpen(false);
+    if (onNavigateSection) {
+      onNavigateSection(id);
+    } else {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
   };
 
   return (
-    <>
-      {/* Mobile Toggle Button */}
-      <button
-        className={`sidebar-toggle ${isOpen ? 'sidebar-toggle--active' : ''}`}
-        onClick={() => setIsOpen(!isOpen)}
-        aria-label="Toggle navigation menu"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+    <header className={`navbar-header ${scrolled ? 'navbar-header--scrolled' : ''}`}>
+      <div className="navbar-container">
+        {/* Brand / Logo */}
+        <a
+          href="#hero"
+          className="navbar-brand"
+          onClick={(e) => {
+            e.preventDefault();
+            handleNavClick('hero');
+          }}
+        >
+          <div className="navbar-avatar">JA</div>
+          <span className="navbar-title">
+            Jert<span className="navbar-title-accent">.dev</span>
+          </span>
+        </a>
 
-      {/* Backdrop for Mobile */}
-      {isOpen && <div className="sidebar-backdrop" onClick={() => setIsOpen(false)} />}
-
-      {/* Left Sidebar Navbar */}
-      <aside className={`sidebar-nav ${isOpen ? 'sidebar-nav--open' : ''}`}>
-        <div className="sidebar-nav__inner">
-          {/* Title Header */}
-          <div className="sidebar-nav__header">
-            <a
-              href="#about"
-              className={`sidebar-nav__title ${activeTab === 'about' ? 'sidebar-nav__title--active' : ''}`}
-              onClick={(e) => {
-                e.preventDefault();
-                handleNavClick('about');
-              }}
-            >
-              Jert Adlaon
-            </a>
-          </div>
-
-          {/* Main Navigation Section Links (Separated Tabs) */}
-          <ul className="sidebar-nav__main">
-            {mainNav.map((item) => {
-              const isActive = activeTab === item.id;
+        {/* Desktop Navigation Links */}
+        <nav className="navbar-nav-desktop">
+          <ul className="navbar-nav-list">
+            {navItems.map((item) => {
+              const isActive = activeSection === item.id || (activeSection === '' && item.id === 'hero');
               return (
-                <li key={item.id} className="sidebar-nav__item">
-                  <a
-                    href={`#${item.id}`}
-                    className={`sidebar-nav__main-link ${isActive ? 'sidebar-nav__main-link--active' : ''}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleNavClick(item.id);
-                    }}
+                <li key={item.id}>
+                  <button
+                    className={`navbar-link ${isActive ? 'navbar-link--active' : ''}`}
+                    onClick={() => handleNavClick(item.id)}
                   >
-                    <span className="sidebar-nav__icon">{item.icon}</span>
-                    <span className="sidebar-nav__label">{item.label}</span>
-                    {isActive && <span className="sidebar-nav__active-indicator">→</span>}
-                  </a>
+                    {item.label}
+                    {isActive && <span className="navbar-link-indicator" />}
+                  </button>
                 </li>
               );
             })}
           </ul>
+        </nav>
+
+        {/* Header Actions: Theme Switcher + CTA */}
+        <div className="navbar-actions">
+          {/* Light / Dark Mode Toggle Switch */}
+          <button
+            className="theme-toggle-btn"
+            onClick={onToggleTheme}
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+          >
+            <div className={`theme-toggle-icon ${theme === 'dark' ? 'theme-toggle-icon--dark' : 'theme-toggle-icon--light'}`}>
+              {theme === 'dark' ? (
+                /* Sun Icon for Dark Mode (click to go Light) */
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="5" />
+                  <line x1="12" y1="1" x2="12" y2="3" />
+                  <line x1="12" y1="21" x2="12" y2="23" />
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                  <line x1="1" y1="12" x2="3" y2="12" />
+                  <line x1="21" y1="12" x2="23" y2="12" />
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </svg>
+              ) : (
+                /* Moon Icon for Light Mode (click to go Dark) */
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                </svg>
+              )}
+            </div>
+            <span className="theme-toggle-label">{theme === 'dark' ? 'Light' : 'Dark'}</span>
+          </button>
+
+          {/* Quick CTA Button */}
+          <button
+            className="navbar-cta-btn"
+            onClick={() => handleNavClick('contact')}
+          >
+            Hire Me
+          </button>
+
+          {/* Mobile Menu Toggle */}
+          <button
+            className={`mobile-toggle-btn ${mobileOpen ? 'mobile-toggle-btn--active' : ''}`}
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle Navigation Drawer"
+          >
+            <span />
+            <span />
+            <span />
+          </button>
         </div>
-      </aside>
-    </>
+      </div>
+
+      {/* Mobile Drawer Navigation */}
+      {mobileOpen && (
+        <div className="mobile-drawer-backdrop" onClick={() => setMobileOpen(false)}>
+          <div className="mobile-drawer-content" onClick={(e) => e.stopPropagation()}>
+            <div className="mobile-drawer-header">
+              <div className="navbar-avatar">JA</div>
+              <span className="navbar-title">Jert Adlaon</span>
+            </div>
+            <ul className="mobile-drawer-list">
+              {navItems.map((item) => {
+                const isActive = activeSection === item.id;
+                return (
+                  <li key={item.id}>
+                    <button
+                      className={`mobile-drawer-link ${isActive ? 'mobile-drawer-link--active' : ''}`}
+                      onClick={() => handleNavClick(item.id)}
+                    >
+                      {item.label}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+            <div className="mobile-drawer-actions">
+              <button className="mobile-theme-btn" onClick={onToggleTheme}>
+                {theme === 'dark' ? '☀️ Switch to Light Mode' : '🌙 Switch to Dark Mode'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </header>
   );
 }
-
-
-
