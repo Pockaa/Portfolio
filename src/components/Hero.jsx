@@ -3,7 +3,7 @@ import './Hero.css';
 
 const roles = [
   'Front-End Developer',
-  'Web Designer',
+  'UI/UX Designer',
   'Video & Media Editor',
   'Virtual Assistant',
 ];
@@ -18,10 +18,12 @@ const stats = [
 const techBadges = [
   { name: 'React', icon: '⚛️', color: '#61dafb' },
   { name: 'React Native', icon: '📱', color: '#38bdf8' },
+  { name: 'Next.js', icon: '▲', color: '#00f2fe' },
   { name: 'TypeScript', icon: '📘', color: '#3178c6' },
-  { name: 'Node.js', icon: '🟢', color: '#22c55e' },
   { name: 'Shopify', icon: '🛍️', color: '#96bf48' },
-  { name: 'Supabase', icon: '⚡', color: '#3ecf8e' },
+  { name: 'Figma', icon: '🎨', color: '#f24e1e' },
+  { name: 'PhotoShop', icon: '🟦', color: '#31a8ff' },
+  { name: 'CapCut', icon: '🎬', color: '#ff0050' },
 ];
 
 export default function Hero({ onNavigateSection }) {
@@ -95,7 +97,7 @@ export default function Hero({ onNavigateSection }) {
           </div>
 
           <p className="hero-description">
-            IT graduate with versatile hands-on experience spanning web & mobile development, IT infrastructure support, Shopify e-commerce catalog management, and multimedia video editing. Dedicated to crafting elegant digital products with high attention to detail.
+            IT graduate with versatile hands-on experience spanning web & mobile development, IT infrastructure support, Virtual Assistance, and multimedia video editing. Dedicated to crafting elegant digital products with high attention to detail.
           </p>
 
           {/* Action CTAs */}

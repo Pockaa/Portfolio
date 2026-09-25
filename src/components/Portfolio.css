@@ -2,9 +2,6 @@
 
 .portfolio-section {
   position: relative;
-  background: var(--bg-secondary);
-  border-top: 1px solid var(--border-color);
-  border-bottom: 1px solid var(--border-color);
 }
 
 .portfolio-container {

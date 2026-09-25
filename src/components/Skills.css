@@ -2,9 +2,6 @@
 
 .skills-section {
   position: relative;
-  background: var(--bg-secondary);
-  border-top: 1px solid var(--border-color);
-  border-bottom: 1px solid var(--border-color);
 }
 
 .skills-container {

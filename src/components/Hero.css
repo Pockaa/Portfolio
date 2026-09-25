@@ -1,11 +1,11 @@
 /* ===== Hero Section Styles ===== */
 
 .hero-section {
-  min-height: 100vh;
+  min-height: calc(100vh - 72px);
   display: flex;
   align-items: center;
-  padding-top: 130px;
-  padding-bottom: 80px;
+  padding-top: 30px;
+  padding-bottom: 40px;
   position: relative;
 }
 
@@ -324,11 +324,13 @@
 }
 
 .hero-tech-chip--1 { top: -20px; left: -30px; animation-delay: 0s; }
-.hero-tech-chip--2 { top: 40px; right: -40px; animation-delay: 1s; }
-.hero-tech-chip--3 { bottom: 80px; left: -50px; animation-delay: 2s; }
-.hero-tech-chip--4 { bottom: -20px; right: -20px; animation-delay: 3s; }
-.hero-tech-chip--5 { top: 180px; left: -60px; animation-delay: 1.5s; }
-.hero-tech-chip--6 { bottom: 20px; right: -45px; animation-delay: 2.5s; }
+.hero-tech-chip--2 { top: 25px; right: -45px; animation-delay: 1s; }
+.hero-tech-chip--3 { top: 135px; left: -60px; animation-delay: 1.5s; }
+.hero-tech-chip--4 { top: 160px; right: -55px; animation-delay: 0.5s; }
+.hero-tech-chip--5 { top: 290px; left: -55px; animation-delay: 2s; }
+.hero-tech-chip--6 { top: 300px; right: -50px; animation-delay: 2.5s; }
+.hero-tech-chip--7 { bottom: -20px; left: -25px; animation-delay: 3.5s; }
+.hero-tech-chip--8 { bottom: -20px; right: -25px; animation-delay: 3s; }
 
 @keyframes floatChip {
   0% { transform: translateY(0px); }
